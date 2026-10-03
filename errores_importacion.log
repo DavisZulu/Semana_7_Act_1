@@ -1,0 +1,32 @@
+2026-10-02 21:32:27 | INFO    | Inicio de la importacion: carga_masiva_quantum.xlsx
+2026-10-02 21:32:27 | WARNING | usuarios fila 8 | EMPRESA | Consultores Llanogrande SAS -> CHECK constraint failed: ck_usuario_nit_empresa
+2026-10-02 21:32:27 | WARNING | usuarios fila 24 | PERSONA | Registro Duplicado -> UNIQUE constraint failed: usuarios.email
+2026-10-02 21:32:27 | WARNING | usuarios fila 14 | EMPLEADO | Empleado Sin Empresa -> empresa no registrada: 999999999-9
+2026-10-02 21:32:27 | WARNING | usuarios fila 27 | EMPLEADO | Empleado Sin Cedula -> CHECK constraint failed: ck_usuario_cedula_empleado
+2026-10-02 21:32:28 | WARNING | movimientos fila 62 | PAGO | 1036753198 | 3200000.0 -> CHECK constraint failed: ck_wallet_saldo_no_negativo
+2026-10-02 21:32:28 | WARNING | movimientos fila 73 | RECARGA | 939968745-9 | 61000000.0 -> el monto supera el limite por transaccion
+2026-10-02 21:32:28 | WARNING | movimientos fila 113 | PAGO | 1078655506 | -19000.0 -> CHECK constraint failed: ck_transaccion_monto_positivo
+2026-10-02 21:32:28 | WARNING | movimientos fila 128 | TRANSFERENCIA | 1017332847 | 117000.0 -> documento no registrado: 71769648
+2026-10-02 21:32:28 | WARNING | movimientos fila 132 | TRANSFERENCIA | 1005994039 | 66000.0 -> documento no registrado: 72196827
+2026-10-02 21:32:28 | WARNING | movimientos fila 154 | TRANSFERENCIA | 1063482774 | 204000.0 -> documento no registrado: 70168113
+2026-10-02 21:32:28 | WARNING | movimientos fila 195 | TRANSFERENCIA | 1080291676 | 15000.0 -> CHECK constraint failed: ck_transaccion_contraparte
+2026-10-02 21:32:28 | WARNING | movimientos fila 197 | PAGO | 1074416889 | 5631669.07 -> CHECK constraint failed: ck_wallet_saldo_no_negativo
+2026-10-02 21:32:28 | WARNING | movimientos fila 205 | TRANSFERENCIA | 1000028718 | 208000.0 -> documento no registrado: 76306637
+2026-10-02 21:32:28 | WARNING | movimientos fila 239 | RECARGA | 1094047344 | -198000.0 -> CHECK constraint failed: ck_transaccion_monto_positivo
+2026-10-02 21:32:28 | WARNING | movimientos fila 244 | RECARGA | 983526008-7 | 75000000.0 -> el monto supera el limite por transaccion
+2026-10-02 21:32:28 | WARNING | movimientos fila 261 | PAGO | 1092520726 | 32000 -> fecha no valida: 31/09/2026 21:37
+2026-10-02 21:32:28 | WARNING | movimientos fila 277 | RETIRO | 1042175656 | 290000.0 -> tipo no reconocido: RETIRO
+2026-10-02 21:32:29 | WARNING | movimientos fila 279 | TRANSFERENCIA | 1019114289 | 90000.0 -> CHECK constraint failed: ck_transaccion_contraparte
+2026-10-02 21:32:29 | WARNING | movimientos fila 293 | PAGO | 1004583896 | 3785957.14 -> CHECK constraint failed: ck_wallet_saldo_no_negativo
+2026-10-02 21:32:29 | WARNING | movimientos fila 302 | RECARGA | 925988000-5 | 79000000.0 -> el monto supera el limite por transaccion
+2026-10-02 21:32:29 | WARNING | movimientos fila 307 | PAGO | 1055205206 | -100000.0 -> CHECK constraint failed: ck_transaccion_monto_positivo
+2026-10-02 21:32:29 | WARNING | movimientos fila 324 | TRANSFERENCIA | 1066727300 | 221000.0 -> documento no registrado: 77416747
+2026-10-02 21:32:29 | WARNING | movimientos fila 338 | PAGO | 1066896901 | -115000.0 -> CHECK constraint failed: ck_transaccion_monto_positivo
+2026-10-02 21:32:29 | WARNING | movimientos fila 382 | PAGO | 1003433596 | 2329067.44 -> CHECK constraint failed: ck_wallet_saldo_no_negativo
+2026-10-02 21:32:29 | WARNING | movimientos fila 386 | TRANSFERENCIA | 1043760716 | 83000.0 -> CHECK constraint failed: ck_transaccion_contraparte
+2026-10-02 21:32:29 | WARNING | movimientos fila 389 | PAGO | 1038932423 | 4106744.95 -> CHECK constraint failed: ck_wallet_saldo_no_negativo
+2026-10-02 21:32:29 | WARNING | movimientos fila 436 | PAGO | 1004583896 | 1871345.06 -> CHECK constraint failed: ck_wallet_saldo_no_negativo
+2026-10-02 21:32:29 | WARNING | movimientos fila 462 | PAGO | 1069797368 | 38000 -> fecha no valida: 31/09/2026 11:00
+2026-10-02 21:32:29 | WARNING | movimientos fila 464 | RETIRO | 1063482774 | 60000.0 -> tipo no reconocido: RETIRO
+2026-10-02 21:32:29 | INFO    | Fin: 560 filas leidas, 531 importadas, 29 rechazadas
+2026-10-02 21:33:34 | ERROR   | Archivo ya importado (importacion #1): carga_masiva_quantum.xlsx
