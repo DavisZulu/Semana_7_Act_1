@@ -18,8 +18,13 @@ vistas y triggers, de modo que el esquema cubra todas las clases del modelo UML.
 | `configurar_db.py` | Crea el esquema, inserta los datos de prueba y ejecuta las verificaciones |
 | `quantum_wallet.db` | Base de datos SQLite generada por el script |
 | `consultas_verificacion.sql` | Consultas de comprobación para la consola de SQLite |
+| `generar_excel.py` | Genera `carga_masiva_quantum.xlsx` con 560 registros simulados |
+| `importar_excel.py` | Carga masiva del Excel hacia `quantum_wallet.db` |
+| `carga_masiva_quantum.xlsx` | Archivo de carga: hojas `usuarios` (60) y `movimientos` (500) |
+| `errores_importacion.log` / `resultado_importacion.xlsx` | Rechazos de la importación con hoja, fila y motivo |
 | `diagrama_er_quantum_wallet.drawio` | Modelo entidad-relación editable (Draw.io Integration en VS Code) |
 | `diagrama_er_quantum_wallet.png` / `.svg` | Exportaciones del modelo |
+| `capturas/` | Evidencias de la instalación, la ejecución y la verificación |
 | `Semana7_Actividad1_Bases_de_Datos_Deibis_Zuluaga.pdf` | Informe técnico |
 
 ## Del modelo de clases a las tablas
@@ -63,9 +68,12 @@ vistas y triggers, de modo que el esquema cubra todas las clases del modelo UML.
 
 ## Requisitos
 
-- Python 3 (el módulo `sqlite3` viene incluido).
-- SQLite 3 para la consola (opcional; en macOS se puede instalar con `brew install sqlite`).
-- Extensión **SQLite Viewer** en Visual Studio Code para visualizar la base.
+| Componente | Versión utilizada | Uso |
+|---|---|---|
+| Python 3 y módulo `sqlite3` | Python 3.14.7 · SQLite 3.50.4 | Crea y llena la base desde `configurar_db.py` (el módulo viene incluido) |
+| Consola `sqlite3` | SQLite 3.43.2 (incluida en macOS) | Consultas desde la Terminal |
+| DB Browser for SQLite | Aplicación de escritorio | Visualización de la estructura y los datos |
+| `openpyxl` | 3.1.5 | Lectura y escritura de Excel (`python3 -m pip install openpyxl`) |
 
 ```bash
 sqlite3 --version
@@ -115,6 +123,48 @@ saldos, la nómina, el historial de movimientos y el resultado de `PRAGMA foreig
 
 ## Visualización
 
-En Visual Studio Code, con la extensión **SQLite Viewer**, se abre `quantum_wallet.db` desde el
-explorador y se recorren las tablas. También se puede cargar el archivo en
-<https://inloop.github.io/sqlite-viewer/>.
+En **DB Browser for SQLite**: *Open Database* → `quantum_wallet.db`. La pestaña
+*Database Structure* muestra tablas, índices, vistas y triggers, y *Browse Data* el contenido de
+cada tabla. Las capturas de la verificación están en la carpeta `capturas/`.
+
+> **Tabla `sqlite_sequence`**
+> DB Browser lista siete tablas porque incluye `sqlite_sequence`, tabla interna que SQLite crea al
+> usar `AUTOINCREMENT` para guardar el último id asignado.
+
+## Mejora: carga masiva desde Excel
+
+Importa en bloque usuarios y movimientos desde Excel. Cada fila pasa por las mismas funciones,
+restricciones y triggers del sistema; las filas inválidas se rechazan y quedan documentadas.
+
+```bash
+python3 -m pip install openpyxl     # una sola vez
+python3 configurar_db.py            # base limpia
+python3 generar_excel.py            # crea carga_masiva_quantum.xlsx
+python3 importar_excel.py           # importa el Excel
+```
+
+| Característica | Implementación |
+|---|---|
+| Datos simulados | 33 personas, 9 empresas, 14 empleados y 500 movimientos de septiembre de 2026 (semilla fija) |
+| Errores intencionales | 29 filas (5 %): saldo insuficiente, monto negativo, límite, documento inexistente, fecha inválida, tipo no válido, duplicados |
+| Atomicidad | Cada fila se importa completa o no se importa |
+| Orden de dependencias | Los empleados se cargan después de sus empresas |
+| Trazabilidad | `errores_importacion.log` (modo agregar) y `resultado_importacion.xlsx` |
+| Control de duplicados | Huella SHA-256 del archivo en la tabla `importaciones` |
+
+**Salida esperada:**
+
+```
+    Hoja           Leidas  Importadas  Rechazadas
+    usuarios           60          56           4
+    movimientos       500         475          25
+    TOTAL             560         531          29
+    ...
+      Transacciones registradas : 590 (579 nuevas)
+      Conciliacion de saldos    : correcta en todas las wallets
+```
+
+> **Importación repetida**
+> Si se ejecuta de nuevo `importar_excel.py` con el mismo archivo, la carga se rechaza
+> (`CARGA RECHAZADA: este archivo ya se importo`). Para repetir la prueba, ejecute antes
+> `configurar_db.py`.
